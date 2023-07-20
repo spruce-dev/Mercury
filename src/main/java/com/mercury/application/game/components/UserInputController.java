@@ -1,5 +1,6 @@
 package com.mercury.application.game.components;
 
+import com.mercury.application.game.terrain.Terrain;
 import dev.spruce.mercury.Window;
 import dev.spruce.mercury.entity.component.Component;
 import dev.spruce.mercury.entity.Entity;
@@ -10,14 +11,10 @@ public class UserInputController extends Component {
 
     // TEMPORARY CONSTANTS
     // TODO make better way of calculating gravity using physics
-    protected static final float BASE_SPEED = 20f;
+    protected static final float BASE_SPEED = 60f;
     protected static final float BASE_ROTATE_SPEED = 160;
     protected static final float GRAVITY = -50;
     protected static final float JUMP_FACTOR = 30;
-
-    // TODO replace with a way of using terrain heights to calculate position
-    // TODO currently all terrains are locked to 0 height so this is oki for now :3
-    private static final float TERRAIN_HEIGHT = 0;
 
     private float currentMovementSpeed = 0f;
     private float currentRotationSpeed = 0f;
@@ -26,8 +23,11 @@ public class UserInputController extends Component {
     private boolean inAir;
     private boolean onGround;
 
-    public UserInputController(Entity parent) {
+    private Terrain currentTerrain;
+
+    public UserInputController(Entity parent, Terrain currentTerrain) {
         super(parent);
+        this.currentTerrain = currentTerrain;
     }
 
     @Override
@@ -47,9 +47,10 @@ public class UserInputController extends Component {
 
         this.jumpMotion += GRAVITY * Window.getDeltaSeconds();
         this.parent.transformPosition(0, this.jumpMotion * Window.getDeltaSeconds(), 0);
-        if (this.parent.getPosition().y < TERRAIN_HEIGHT) {
+        float terrainHeightBelow = currentTerrain.getHeightAtPosition((int) parent.getPosition().x, (int) parent.getPosition().z);
+        if (this.parent.getPosition().y < terrainHeightBelow) {
             this.jumpMotion = 0f;
-            this.parent.getPosition().y = 0f;
+            this.parent.getPosition().y = terrainHeightBelow;
             setAirAndGroundBooleans(true);
         }
     }
@@ -102,5 +103,13 @@ public class UserInputController extends Component {
 
     public boolean isOnGround() {
         return onGround;
+    }
+
+    public Terrain getCurrentTerrain() {
+        return currentTerrain;
+    }
+
+    public void setCurrentTerrain(Terrain currentTerrain) {
+        this.currentTerrain = currentTerrain;
     }
 }

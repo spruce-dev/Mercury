@@ -8,7 +8,7 @@ public class ThirdPersonCamera extends GameCamera {
 
     private LocalPlayer player;
 
-    private float zoom = 50f;
+    private float zoom = 12f;
     private float rotationRoundPlayer = 0f;
 
     public ThirdPersonCamera(LocalPlayer player) {
@@ -23,15 +23,12 @@ public class ThirdPersonCamera extends GameCamera {
     }
 
     private void handleInput() {
-        float zoomLevel = (float) (MouseListener.get().getScrollY() * 0.1f);
+        float zoomLevel = (float) (MouseListener.get().getScrollY() * 0.8f);
         this.zoom -= zoomLevel;
 
         if (MouseListener.get().isButtonPressed(GLFW.GLFW_MOUSE_BUTTON_2)) {
             float pitchChange = (float) (MouseListener.get().getPosDeltaY() * 0.1f);
-            setPitch(getPitch() - pitchChange);
-        }
-
-        if (MouseListener.get().isButtonPressed(GLFW.GLFW_MOUSE_BUTTON_1)) {
+            setPitch(getPitch() + pitchChange);
             float rotationChange = (float) (MouseListener.get().getPosDeltaX() * 0.3f);
             this.rotationRoundPlayer -= rotationChange;
         }
