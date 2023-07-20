@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL14.GL_TEXTURE_LOD_BIAS;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
@@ -44,6 +45,11 @@ public class TextureLoader {
         }
         glTexImage2D(GL_TEXTURE_2D, 0, colourValue, width.get(0), height.get(0), 0, colourValue, GL_UNSIGNED_BYTE, image);
         stbi_image_free(image);
+
+        GL30.glGenerateMipmap(GL_TEXTURE_2D);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -1);
+
         return new Texture(textureID);
     }
 

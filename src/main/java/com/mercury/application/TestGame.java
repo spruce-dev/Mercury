@@ -25,6 +25,8 @@ public class TestGame extends Application {
 
     private Terrain terrain;
     private Terrain terrain2;
+    private Terrain terrain3;
+    private Terrain terrain4;
 
     private LocalPlayer thePlayer;
 
@@ -39,14 +41,15 @@ public class TestGame extends Application {
 
     @Override
     public void init() {
-        terrain = new Terrain(0, 0, TextureLoader.get().loadTexture("assets/res/terrain_grass.jpg"));
-        terrain2 = new Terrain(0, 1, TextureLoader.get().loadTexture("assets/res/terrain_grass.jpg"));
+        Texture terrainTexture = TextureLoader.get().loadTexture("assets/res/terrain_grass.jpg");
+        terrain = new Terrain(0, 0, terrainTexture);
+        terrain2 = new Terrain(-1, 0, terrainTexture);
+        terrain3 = new Terrain(0, -1, terrainTexture);
+        terrain4 = new Terrain(-1, -1, terrainTexture);
 
         lightSource = new Light(new Vector3f(3000f, 2000f, 2000f), new Vector3f(1, 1, 1));
 
         Texture playerTexture = TextureLoader.get().loadTexture("assets/res/no_texture.png");
-        playerTexture.setReflectivity(0f);
-        playerTexture.setShineDamper(1f);
         TexturedModel playerModel = new TexturedModel(ObjectFileLoader.loadFromObjectFile("assets/res/player.obj"),
                 playerTexture);
         thePlayer = new LocalPlayer(playerModel, new Vector3f(-10, 10, -10), new Vector3f(0, 0, 0), 1f);
@@ -64,6 +67,8 @@ public class TestGame extends Application {
         camera.move();
         renderer.processTerrain(terrain);
         renderer.processTerrain(terrain2);
+        renderer.processTerrain(terrain3);
+        renderer.processTerrain(terrain4);
         renderer.render(lightSource, camera);
     }
 
