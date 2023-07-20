@@ -7,9 +7,11 @@ import dev.spruce.mercury.application.ApplicationConfig;
 import dev.spruce.mercury.entity.Light;
 import com.mercury.application.game.terrain.Terrain;
 import dev.spruce.mercury.graphics.camera.GameCamera;
+import dev.spruce.mercury.graphics.camera.ThirdPersonCamera;
 import dev.spruce.mercury.graphics.model.ObjectFileLoader;
 import dev.spruce.mercury.graphics.model.TexturedModel;
 import dev.spruce.mercury.graphics.render.MasterRenderer;
+import dev.spruce.mercury.graphics.texture.Texture;
 import dev.spruce.mercury.graphics.texture.TextureLoader;
 import org.joml.Vector3f;
 
@@ -19,7 +21,7 @@ public class TestGame extends Application {
     private MasterRenderer renderer;
 
     private Light lightSource;
-    public GameCamera camera;
+    public ThirdPersonCamera camera;
 
     private Terrain terrain;
     private Terrain terrain2;
@@ -42,12 +44,15 @@ public class TestGame extends Application {
 
         lightSource = new Light(new Vector3f(3000f, 2000f, 2000f), new Vector3f(1, 1, 1));
 
+        Texture playerTexture = TextureLoader.get().loadTexture("assets/res/no_texture.png");
+        playerTexture.setReflectivity(0f);
+        playerTexture.setShineDamper(1f);
         TexturedModel playerModel = new TexturedModel(ObjectFileLoader.loadFromObjectFile("assets/res/player.obj"),
-                TextureLoader.get().loadTexture("assets/res/no_texture.png"));
+                playerTexture);
         thePlayer = new LocalPlayer(playerModel, new Vector3f(-10, 10, -10), new Vector3f(0, 0, 0), 1f);
 
-        camera = new GameCamera();
-        camera.setPosition(new Vector3f(0, 10, 0));
+        camera = new ThirdPersonCamera(thePlayer);
+        //camera.setPosition(new Vector3f(0, 10, 0));
 
         this.renderer = new MasterRenderer();
         this.entityManager = new CustomEntityManager(renderer);
@@ -56,6 +61,7 @@ public class TestGame extends Application {
 
     @Override
     public void render(float delta) {
+        camera.move();
         renderer.processTerrain(terrain);
         renderer.processTerrain(terrain2);
         renderer.render(lightSource, camera);

@@ -74,6 +74,7 @@ public class Window {
             application.render(getDeltaSeconds());
 
             glfwSwapBuffers(glfwWindow);
+            MouseListener.endFrame();
 
             long currentFrameTime = Time.getTime();
             deltaTime = currentFrameTime - lastFrameTime;

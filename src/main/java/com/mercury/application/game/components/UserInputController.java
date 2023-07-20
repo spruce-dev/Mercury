@@ -74,9 +74,9 @@ public class UserInputController extends Component {
         } else {
             this.currentMovementSpeed = 0f;
         }
-        if (KeyboardInput.get().isKeyDown(GLFW.GLFW_KEY_LEFT)) {
+        if (KeyboardInput.get().isKeyDown(GLFW.GLFW_KEY_A)) {
             this.currentRotationSpeed = BASE_ROTATE_SPEED;
-        } else if (KeyboardInput.get().isKeyDown(GLFW.GLFW_KEY_RIGHT)){
+        } else if (KeyboardInput.get().isKeyDown(GLFW.GLFW_KEY_D)){
             this.currentRotationSpeed = -BASE_ROTATE_SPEED;
         } else {
             this.currentRotationSpeed = 0f;

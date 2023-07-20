@@ -3,16 +3,14 @@ package dev.spruce.mercury.graphics.camera;
 import dev.spruce.mercury.utils.MathUtil;
 import org.joml.Vector3f;
 
-public class GameCamera {
+public abstract class GameCamera {
 
     private Vector3f position = new Vector3f(0, 0, 0);
     private float yaw = 0;
-    private float pitch = 0;
+    private float pitch = 20;
     private float roll = 0;
 
-    public GameCamera() {
-
-    }
+    public abstract void move();
 
     public void translate(float x, float y, float z) {
         translate(MathUtil.toVector3f(x, y, z));
