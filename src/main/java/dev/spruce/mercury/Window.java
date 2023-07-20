@@ -61,6 +61,7 @@ public class Window {
         GL.createCapabilities();
 
         application.init();
+        application.addManagers();
         application.getMasterManager().init();
     }
 

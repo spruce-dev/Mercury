@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class MasterManager extends AbstractManager {
 
-    private List<AbstractManager> managers = new ArrayList<>();
+    private final List<AbstractManager> managers = new ArrayList<>();
 
     public void addManagers(AbstractManager... abstractManagers) {
         this.managers.addAll(Arrays.stream(abstractManagers).collect(Collectors.toList()));

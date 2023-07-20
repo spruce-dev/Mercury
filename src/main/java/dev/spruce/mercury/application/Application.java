@@ -11,14 +11,13 @@ public abstract class Application {
     public Application(ApplicationConfig config) {
         this.applicationConfig = config;
         this.masterManager = new MasterManager();
-        addManagers();
     }
 
     public abstract void init();
     public abstract void render(float delta);
     public abstract void free();
 
-    protected abstract void addManagers();
+    public abstract void addManagers();
 
     protected void initManagers(AbstractManager... managers) {
         this.masterManager.addManagers(managers);

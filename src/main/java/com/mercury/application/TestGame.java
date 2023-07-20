@@ -31,7 +31,7 @@ public class TestGame extends Application {
     }
 
     @Override
-    protected void addManagers() {
+    public void addManagers() {
         super.initManagers(entityManager);
     }
 
