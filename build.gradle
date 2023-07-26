@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 plugins {
     id 'java'
 }
@@ -20,7 +22,15 @@ test {
 
 project.ext.lwjglVersion = "3.3.2"
 project.ext.jomlVersion = "1.10.5"
-project.ext.lwjglNatives = "natives-windows"
+
+switch (OperatingSystem.current()) {
+    case OperatingSystem.LINUX:
+        project.ext.lwjglNatives = "natives-linux"
+        break
+    case OperatingSystem.WINDOWS:
+        project.ext.lwjglNatives = "natives-windows"
+        break
+}
 
 dependencies {
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")

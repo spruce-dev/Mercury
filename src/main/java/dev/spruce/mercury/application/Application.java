@@ -3,6 +3,8 @@ package dev.spruce.mercury.application;
 import dev.spruce.mercury.manager.AbstractManager;
 import dev.spruce.mercury.manager.MasterManager;
 
+import java.util.List;
+
 public abstract class Application {
 
     private final ApplicationConfig applicationConfig;
@@ -21,6 +23,10 @@ public abstract class Application {
 
     protected void initManagers(AbstractManager... managers) {
         this.masterManager.addManagers(managers);
+    }
+
+    protected void initManagers(List<AbstractManager> managers){
+        managers.forEach(manager -> this.masterManager.addManager(manager));
     }
 
     public ApplicationConfig getApplicationConfig() {
